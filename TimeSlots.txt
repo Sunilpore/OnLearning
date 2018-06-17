@@ -1,0 +1,137 @@
+        double startTime = 9.20;
+        double endtime=11.00;
+        int timeDuration= 15;
+
+
+
+
+
+
+
+
+        DecimalFormat twoDForm = new DecimalFormat("#.00");
+
+        /*double catlyst;
+        if(startTime <10){
+            catlyst =Math.ceil(startTime * 100);
+        }else {
+            catlyst = startTime * 100;
+        }*/
+
+        double catlyst = startTime * 100;
+        double catlyst2;
+        if(endtime<10){
+            catlyst2=Math.ceil(endtime*100);
+        }else{
+            catlyst2 = endtime*100;
+        }
+
+
+        int i=1;
+        String c="",c2="";
+        while(i<3){
+            String k = String.valueOf((int)catlyst % 10);
+            String k2 = String.valueOf((int)catlyst2 % 10);
+            c = k.concat(c);
+            c2 = k2.concat(c2);
+            catlyst = (int)catlyst/10;
+            catlyst2 = (int)catlyst2/10;
+            i++;
+        }
+
+
+        int hours = 0,minutes = 0;
+        if(endtime>startTime){
+
+            hours=(int)endtime-(int)startTime;
+            if(Integer.parseInt(c)==0){
+                minutes = 60 - Integer.parseInt(c2);
+            }else if(Integer.parseInt(c2)==0){
+                minutes = 60 - Integer.parseInt(c2);
+            }
+            else if(Integer.parseInt(c)> Integer.parseInt(c2)) {
+                minutes = Integer.parseInt(c) - Integer.parseInt(c2);
+            } else if (hours==0){
+                minutes = Integer.parseInt(c2) - Integer.parseInt(c);
+            } else{
+                minutes = (60-Integer.parseInt(c)) + (60-Integer.parseInt(c));
+            }
+
+            Log.d("CalH:","hours:"+hours);
+        }
+
+        if(hours<2){
+            hours=0;
+        }
+
+        String mi;
+        if(minutes<10){
+            mi = "0"+minutes;
+        }else{
+            mi = ""+minutes;
+        }
+
+
+        //Calculate Slots
+         int Totaltime= Integer.parseInt(mi) + hours*60;
+         int slots = (int) Math.ceil(Totaltime/timeDuration);
+
+
+
+        if(c.length()<2){
+            c="0.0"+c;
+        }else {
+            c="0."+c;
+        }
+
+        String t;
+        if(timeDuration<10){
+            t = "0.0"+timeDuration;
+        }else{
+            t = "0."+timeDuration;
+        }
+        // DecimalFormat twoDForm = new DecimalFormat("#.00");
+
+        double addmin = Double.parseDouble(c);
+        double check = 0;
+        double d=0;
+        String ag;
+
+        for(i=1;i<=slots;i++){
+
+            ag = twoDForm.format(addmin);
+            addmin = Double.parseDouble(ag);
+
+            check = check + Double.parseDouble(t);
+            if(addmin>0.58){
+                startTime = (int)startTime+1;
+                addmin = addmin-0.60;
+                d=startTime+addmin;
+                check=0;
+            }
+            else if(i==1){
+                d = startTime;
+            } else{
+                d = startTime + Double.parseDouble(t);
+            }
+
+            addmin = addmin+Double.parseDouble(t);
+            //double d = startTime + addmin;
+
+
+
+
+            String var1=twoDForm.format(d);
+            startTime = Double.parseDouble(var1);
+
+            int min = Integer.parseInt(var1.replace(".",""));
+            String maxt = String.valueOf(endtime).replace(".","");
+            if(maxt.length() < 4){
+                maxt=maxt+"0";
+            }
+
+            if(min >= Integer.parseInt(maxt) ){
+                break;
+            }
+            Log.d("AddN","no: "+var1/*+"\tmin:"+addmin*/);
+        }

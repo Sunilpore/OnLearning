@@ -1,0 +1,51 @@
+        double a= 9.35;
+        int b= 10;
+
+        DecimalFormat twoDForm = new DecimalFormat("#.00");
+
+      /*  int range =String.valueOf(a).lastIndexOf(".");
+        StringBuilder sb= new StringBuilder(String.valueOf(a));
+        String c = sb.substring(range+2, range+3);
+
+        String tmp="";
+        if(Integer.parseInt(c)<10){
+            c="0"+c;
+        }*/
+
+       // Log.d("AddN","no: "+tmp);
+        double catlyst;
+        if(a<10){
+            catlyst =Math.ceil(a * 100);
+        }else {
+            catlyst = a * 100;
+        }
+
+        int i=1;
+        String c="";
+        while(i<3){
+            String k = String.valueOf((int)catlyst % 10);
+            c = k.concat(c);
+            catlyst = (int)catlyst/10;
+            i++;
+        }
+
+        int maxLimit = Integer.parseInt(c)+b;
+        int newMin;
+        if(maxLimit>59){
+            newMin= maxLimit-60;
+            a=a+1;
+        }else{
+            newMin=maxLimit;
+        }
+
+        String t;
+        if(newMin<9){
+            t = "0.0"+newMin;
+        }else{
+            t = "0."+newMin;
+        }
+
+       // DecimalFormat twoDForm = new DecimalFormat("#.00");
+        double d= (int)a + Double.parseDouble(t);
+        String var1=twoDForm.format(d);
+        Log.d("AddN","no: "+var1);
